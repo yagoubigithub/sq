@@ -1,0 +1,22 @@
+{
+  "name": "sq-communicator",
+  "version": "0.1.0",
+  "description": "smart-Q Communicator",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm run install:core && npm run install:service && npm run install:ui",
+    "install:core": "cd core && npm i",
+    "install:service": "cd service && npm i",
+    "install:ui": "cd ui && npm i",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.smart-q.de:smart-q_team/sq-communicator.git"
+  },
+  "author": {
+    "name": "smart-Q GmbH",
+    "email": "info@smart-q.de"
+  }
+}

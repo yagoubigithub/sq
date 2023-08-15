@@ -1,0 +1,151 @@
+@import "./common";
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+
+h2 {
+	font-weight: 700;
+}
+
+::-webkit-scrollbar {
+	background-color: lightgray;
+	width: 4px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+	background: gray;
+}
+
+.modal-dialog.modal-xl .modal-content {
+	&, & > * {
+		height: 100%;
+	}
+}
+
+$list-border-radius: 16px;
+$list-item-spacing: 4px;
+
+.list-group .list-group-item {
+	border-bottom: none;
+	margin-bottom: $list-item-spacing;
+	border-radius: $list-border-radius;
+}
+
+.table {
+	border-collapse: separate;
+	border-spacing: 0 $list-item-spacing;
+
+	tr {
+		th, td {
+			background: $white;
+			padding: 8px 16px;
+
+			&:first-of-type {
+				border-top-left-radius: $list-border-radius;
+				border-bottom-left-radius: $list-border-radius;
+			}
+
+			&:last-of-type {
+				border-top-right-radius: $list-border-radius;
+				border-bottom-right-radius: $list-border-radius;
+			}
+		}
+
+		th {
+			color: $white;
+			background: $secondary;
+		}
+	}
+}
+
+th[sortable] {
+	cursor: pointer;
+	user-select: none;
+	padding-left: 16px;
+	position: relative;
+
+	&::before {
+		@extend .fas;
+		content: '';
+		display: block;
+		width: 16px;
+		height: 16px;
+		font-size: 16px;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	&.asc::before {
+		content: fa-content($fa-var-caret-up);
+	}
+
+	&.desc::before {
+		content: fa-content($fa-var-caret-down);
+	}
+}
+
+i[class^="sq-"], i[class*=" sq-"] {
+	line-height: 1;
+}
+
+.input-group .input-group-prepend + .form-control {
+	border-left: none;
+}
+
+.input-group .input-group-append > .btn-outline-secondary {
+	border-left: none;
+	background-color: $input-group-addon-bg !important;
+	border-color: $input-border-color;
+
+	&:hover {
+		color: $dark;
+	}
+
+	&:disabled {
+		opacity: unset;
+		color: $gray-300;
+	}
+}
+
+.modal-content .modal-body {
+	background-color: $white;
+	border-radius: 16px;
+	margin-left: 6px;
+	margin-right: 6px;
+
+	hr {
+		margin-left: calc(#{$modal-inner-padding} * -1);
+		width: calc(100% + #{$modal-inner-padding} * 2);
+	}
+
+}
+
+.page-item .page-link {
+	border-radius: $border-radius;
+	margin: 0 4px;
+	color: $secondary;
+
+	&:hover {
+		color: $white;
+	}
+}
+
+.page-item.active .page-link {
+	font-weight: 700;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.form-group label {
+	font-size: $font-size-sm;
+}
+
+.bg-gray-200 {
+	background: $gray-200;
+}

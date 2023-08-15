@@ -1,0 +1,14 @@
+:host {
+	display: block;
+
+	div[ngbDropdownMenu] {
+		max-height: 164px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		width: 100%;
+
+		button[ngbDropdownItem] {
+			padding-left: 12px;
+		}
+	}
+}

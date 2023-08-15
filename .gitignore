@@ -1,0 +1,4 @@
+./core/node_modules
+./ui/node_modules
+./service/node_modules
+./playground/node_modules

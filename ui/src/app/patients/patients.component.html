@@ -1,0 +1,57 @@
+<!-- TODO: Stick to the top -->
+<div class="d-flex justify-content-between align-items-center py-3">
+	<h2 class="flex-fill">Patienten</h2>
+	<div>
+		<div class="input-group">
+			<span class="input-group-prepend">
+				<i class="input-group-text sq-search"></i>
+			</span>
+			<input name="searchInput" placeholder="suche" class="form-control" id="searchInput" [(ngModel)]="searchText"
+				(ngModelChange)="searchTextHasChanged()" />
+			<div class="input-group-append">
+				<button type="button" class="btn btn-outline-secondary" [disabled]="!searchText"
+					(click)="searchText = ''; searchTextHasChanged()">
+					<i class="sq-cross"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+	<button class="btn btn-primary ml-3" (click)="openAdmissionModal()">
+		<i class="sq-plus"></i>
+		Einweisung
+	</button>
+</div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col" sortable="patient.epid" (sort)="onSort($event)">EPID</th>
+			<th scope="col" sortable="patient.lastName" (sort)="onSort($event)">Name</th>
+			<th scope="col" sortable="patient.dateOfBirth" (sort)="onSort($event)">Geburtsdatum</th>
+			<th scope="col" colspan="2" sortable="eventTime" (sort)="onSort($event)">letzte Aktivität</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let p of patients" [routerLink]="[ '.', p.patient.epid ]" style="cursor: pointer">
+			<td>{{ p.patient.epid }}</td>
+			<td>{{ p.patient.lastName }}, {{ p.patient.firstName }}</td>
+			<td>{{ p.patient.dateOfBirth | dateOfBirth }}</td>
+			<td [ngSwitch]="p.eventType">
+				<ng-container *ngSwitchCase="'PATIENT_ADMITTED'">eingewiesen</ng-container>
+				<ng-container *ngSwitchCase="'PATIENT_INFO_UPDATED'">Infos aktualisiert</ng-container>
+				<ng-container *ngSwitchCase="'PATIENT_SCORE_FETCHED'">Ergebnis abgeholt</ng-container>
+				<ng-container *ngSwitchCase="'FILE_RECEIVED'">File received</ng-container>
+				<ng-container *ngSwitchCase="'FILE_SENT'">File sent</ng-container>
+			</td>
+			<td class="text-right">
+				<span title="{{ p.eventTime | date:'dd.MM.yyyy HH:mm:ss' }}">{{ p.eventTime | amTimeAgo }}</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- TODO: Stick to the bottom -->
+<ngb-pagination class="d-flex justify-content-center"
+	[(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize"
+	(pageChange)="onPageChange()">
+</ngb-pagination>

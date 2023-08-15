@@ -1,0 +1,30 @@
+<div ngbDropdown display="static" placement="top" #searchResultDropdown="ngbDropdown">
+	<div class="input-group">
+		<input type="text" placeholder="ICD" class="form-control flex-grow-0"
+			style="min-width: 100px; text-transform: uppercase"
+			[textMask]="{ mask: icdMask }"
+			[(ngModel)]="icdText" (ngModelChange)="icdTextHasChanged()"
+			(focus)="onFocus()"
+			(blur)="onBlur()" />
+		<input type="text" placeholder="Description" class="form-control"
+			[(ngModel)]="model.description" (ngModelChange)="descriptionHasChanged()"
+			(focus)="onFocus()"
+			(blur)="onBlur()" />
+		<div class="input-group-append">
+			<button class="btn btn-outline-secondary" type="button" [disabled]="!canDelete"
+				(click)="onDelete.emit()">
+				<i class="sq-trash"></i>
+			</button>
+		</div>
+	</div>
+	<div ngbDropdownMenu>
+		<infinite-scroll (scrolled)="onSuggestionScroll()">
+			<button ngbDropdownItem *ngFor="let icd of searchResult" (mousedown)="suggestionClicked(icd)">
+				<span style="display: inline-block; min-width: 100px">
+					{{ icd.code }}
+				</span>
+				{{ icd.label }}
+			</button>
+		</infinite-scroll>
+	</div>
+</div>

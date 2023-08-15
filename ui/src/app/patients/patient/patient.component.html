@@ -1,0 +1,143 @@
+<ng-container *ngIf="patient">
+	<div class="sticky-top bg-gray-200">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb bg-gray-200 mb-0 pl-0">
+				<li class="breadcrumb-item"><a routerLink="..">Patienten</a></li>
+				<li class="breadcrumb-item active" aria-current="page">{{ patient.epid }}</li>
+			</ol>
+		</nav>
+		<h2>{{ patient.lastName }}, {{ patient.firstName }}</h2>
+	</div>
+
+	<hr/>
+
+	<div class="row">
+		<div class="col-6">
+			<div class="row">
+				<div class="col-4"><strong>Vorname</strong></div>
+				<div class="col-8"><p>{{ patient.firstName }}</p></div>
+			</div>
+			<div class="row">
+				<div class="col-4"><strong>Nachname</strong></div>
+				<div class="col-8"><p>{{ patient.lastName }}</p></div>
+			</div>
+			<div class="row">
+				<div class="col-4"><strong>Geburtsdatum</strong></div>
+				<div class="col-8"><p>{{ patient.dateOfBirth | dateOfBirth }}</p></div>
+			</div>
+			<div class="row">
+				<div class="col-4"><strong>EPID</strong></div>
+				<div class="col-8"><p>{{ patient.epid }}</p></div>
+			</div>
+		</div>
+		<div class="col-6">
+			<!-- TODO: Show file drop zone -->
+		</div>
+	</div>
+
+	<hr/>
+
+	<ng-container *ngIf="patientDateCheats.length">
+		<h3>
+			Auswahl Zeitraum
+			<button type="button" class="btn btn-link"
+				ngbPopover="GDT - Wählen Sie bitte den Zeitraum aus, in dem Patientendaten (Umfrage) vom Server geladen werden sollen. Beachten Sie bitte, dass das Enddatum nicht vor dem Startdatum liegen darf.">
+				<i class="fa fa-info-circle"></i>
+			</button>
+		</h3>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Profil</th>
+					<th scope="col">Startdatum</th>
+					<th scope="col">Enddatum</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let patientDateCheat of patientDateCheats">
+					<td>{{ config.getProfile(patientDateCheat.profileId).name }}</td>
+					<td>
+						<div class="input-group">
+							<input class="form-control" readonly
+								ngbDatepicker [maxDate]="dateToNgbDateStruct(patientDateCheat.end)"
+								#startDatePicker="ngbDatepicker" [(ngModel)]="patientDateCheat.start"
+								(click)="startDatePicker.toggle()" (dateSelect)="patientDateCheat.save()" />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary"
+									[disabled]="!patientDateCheat.start"
+									(click)="patientDateCheat.start = null; patientDateCheat.save()">
+									<i class="sq-cross"></i>
+								</button>
+								<button class="btn btn-outline-secondary" type="button"
+									(click)="startDatePicker.toggle()">
+									<i class="sq-calendar"></i>
+								</button>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="input-group">
+							<input class="form-control" readonly
+								ngbDatepicker [minDate]="dateToNgbDateStruct(patientDateCheat.start)"
+								#endDatePicker="ngbDatepicker" [(ngModel)]="patientDateCheat.end"
+								(click)="endDatePicker.toggle()" (dateSelect)="patientDateCheat.save()" />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary"
+									[disabled]="!patientDateCheat.end"
+									(click)="patientDateCheat.end = null; patientDateCheat.save()">
+									<i class="sq-cross"></i>
+								</button>
+								<button class="btn btn-outline-secondary" type="button"
+									(click)="endDatePicker.toggle()">
+									<i class="sq-calendar"></i>
+								</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<hr/>
+	</ng-container>
+
+	<h3>Aktivitäten</h3>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item" *ngFor="let eventLog of eventLogs" [ngSwitch]="eventLog.eventType">
+			<div class="d-flex w-100 justify-content-between"
+				[ngClass]="'text-' + (eventLog.eventType === 'ERROR' ? 'danger' : eventLog.eventType === 'WARNING' ? 'warning' : 'secondary')">
+				<div>
+					<ng-container *ngSwitchCase="'PATIENT_ADMITTED'">
+						eingewiesen
+					</ng-container>
+					<ng-container *ngSwitchCase="'PATIENT_INFO_UPDATED'">
+						Infos aktualisiert
+					</ng-container>
+					<ng-container *ngSwitchCase="'PATIENT_SCORE_FETCHED'">
+						Ergebnis abgeholt
+					</ng-container>
+					<ng-container *ngSwitchCase="'FILE_RECEIVED'">
+						File received from <b>{{ eventLog.details.sender }}</b>: <b>{{ eventLog.details.fileName }}</b>.
+					</ng-container>
+					<ng-container *ngSwitchCase="'FILE_SENT'">
+						File sent to <b>{{ eventLog.details.recipient }}</b>: <b>{{ eventLog.details.fileName }}</b>.
+					</ng-container>
+					<ng-container *ngSwitchCase="'WARNING'">
+						{{ eventLog.details.message }}
+					</ng-container>
+					<ng-container *ngSwitchCase="'ERROR'">
+						{{ eventLog.details.message }}
+					</ng-container>
+					<ng-container *ngSwitchDefault>
+						{{ eventLog | json }}
+					</ng-container>
+				</div>
+				<small title="{{ eventLog.time | date:'dd.MM.yyyy HH:mm:ss' }}">{{ eventLog.time | amTimeAgo }}</small>
+			</div>
+		</li>
+	</ul>
+	<div class="text-center py-3" *ngIf="canLoadMoreEvents">
+		<button type="button" class="btn btn-outline-secondary" (click)="loadMoreEvents()">mehr</button>
+	</div>
+</ng-container>
+
