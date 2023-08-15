@@ -1,0 +1,15 @@
+<div class="d-flex justify-content-between align-items-center py-3">
+  <h2>File transfers</h2>
+  <button class="btn btn-primary ml-3"><i class="sq-send"></i> Send file</button>
+</div>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="inbox" routerLinkActive="active">Inbox <span class="badge badge-primary" *ngIf="unreadCount">{{ unreadCount }}</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="outbox" routerLinkActive="active">Outbox</a>
+  </li>
+</ul>
+
+<router-outlet></router-outlet>

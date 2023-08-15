@@ -1,0 +1,35 @@
+diff --git a/node_modules/typeorm/browser/platform/BrowserDisabledDriversDummy.js b/node_modules/typeorm/browser/platform/BrowserDisabledDriversDummy.js
+index 26fbcea..26d625e 100644
+--- a/node_modules/typeorm/browser/platform/BrowserDisabledDriversDummy.js
++++ b/node_modules/typeorm/browser/platform/BrowserDisabledDriversDummy.js
+@@ -96,5 +96,14 @@ var OracleDriver = /** @class */ (function () {
+     return OracleDriver;
+ }());
+ export { OracleDriver };
+-
++/**
++ * DO NOT IMPORT THIS CLASS -
++ * This is a dummy class for replacement via `package.json` in browser builds
++ */
++var AuroraDataApiPostgresDriver = /** @class */ (function () {
++	function AuroraDataApiPostgresDriver() {
++	}
++	return AuroraDataApiPostgresDriver;
++  }());
++  export { AuroraDataApiPostgresDriver };
+ //# sourceMappingURL=BrowserDisabledDriversDummy.js.map
+diff --git a/node_modules/typeorm/browser/platform/PlatformTools.js b/node_modules/typeorm/browser/platform/PlatformTools.js
+index 9af1d68..1e7d40f 100644
+--- a/node_modules/typeorm/browser/platform/PlatformTools.js
++++ b/node_modules/typeorm/browser/platform/PlatformTools.js
+@@ -25,9 +25,7 @@ var PlatformTools = /** @class */ (function () {
+      * This operation only supports on node platform
+      */
+     PlatformTools.load = function (name) {
+-        if (this.type === "browser")
+-            throw new Error("This option/function is not supported in the browser environment. Failed operation: require(\"" + name + "\").");
+-        return "";
++		return window.require('electron').remote.require(name);
+     };
+     /**
+      * Normalizes given path. Does "path.normalize".

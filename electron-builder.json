@@ -1,0 +1,49 @@
+{
+  "productName": "smart-Q Communicator",
+  "directories": {
+    "output": "release/"
+  },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.code-workspace",
+      "!LICENSE.md",
+      "!package.json",
+      "!package-lock.json",
+      "!src/",
+      "!e2e/",
+      "!hooks/",
+      "!angular.json",
+      "!_config.yml",
+      "!karma.conf.js",
+      "!tsconfig.json",
+      "!tslint.json",
+      "!.vscode",
+      "!.github",
+      "!node_module/@sq-communicator",
+      "!sq-icons/"
+    ],
+  "win": {
+    "icon": "dist/assets/icons",
+    "target": [
+      "nsis"
+    ],
+    
+      "requestedExecutionLevel": "requireAdministrator"
+  },
+  "mac": {
+    "icon": "dist/assets/icons",
+    "target": [
+      "dmg"
+    ]
+  },
+  "linux": {
+    "icon": "dist/assets/icons",
+    "target": [
+      "AppImage"
+    ]
+  },
+  "nsis": {
+    "perMachine": true
+  }
+}

@@ -1,0 +1,125 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{ profile ? 'Profil bearbeiten' : 'neues Profil' }}</h4>
+	<button type="button" class="close" aria-label="Close" (click)="dismiss()">
+		<span aria-hidden="true"><i class="sq-cross"></i></span>
+	</button>
+</div>
+<div class="modal-body">
+	<form #form="ngForm">
+		<fieldset [disabled]="isSubmitting">
+			<div class="form-group row">
+				<label for="profilename-input" class="col-4 col-form-label text-right">Name</label>
+				<div class="col-4">
+					<input type="text" name="profileName" id="profilename-input" class="form-control" required [(ngModel)]="profileName" />
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="row">
+				<div class="col-4">
+					<div class="form-group">
+						<label for="deviceid-input">Device ID</label>
+						<input type="text" class="form-control" id="deviceid-input" name="deviceId" required [(ngModel)]="settings.deviceId" />
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-group">
+						<label for="licensekey-input">Lizenzschlüssel</label>
+						<input type="text" class="form-control" id="licensekey-input" name="licenseKey" required [(ngModel)]="settings.licenseKey" />
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-group">
+						<label for="password-input">Passwort</label>
+						<input type="password" class="form-control" id="password-input" name="password" required [(ngModel)]="settings.password" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-8">
+					<div class="form-group">
+						<label for="serverurl-input">Server-Adresse</label>
+						<input type="url" id="serverurl-input" class="form-control" name="serverUrl" required [(ngModel)]="settings.serverUrl" />
+					</div>
+				</div>
+				<div class="col-4 align-self-center text-right">
+					<button type="button" class="btn btn-secondary"
+						[disabled]="!settings.deviceId || !settings.licenseKey || !settings.password || !settings.serverUrl"
+						(click)="testConnection()">
+						<i class="fa fa-network-wired"></i>
+						Verbindung prüfen
+					</button>
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="form-check mb-3">
+				<input class="form-check-input" type="checkbox" id="gdt-service-check" name="enableGDTService" [(ngModel)]="enableGDTService" />
+				<label class="form-check-label" for="gdt-service-check">GDT-Dienst aktivieren</label>
+			</div>
+
+			<ng-container *ngIf="gdtServiceSettings">
+
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label for="inputFolderPath-input">Pfad der Eingangsdatei (GDT / 6301)</label>
+						<div class="input-group">
+							<input type="text" id="inputFolderPath-input" class="form-control" name="inputFolderPath" required [(ngModel)]="gdtServiceSettings.inputFolderPath" />
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button" (click)="browseForFolder('input')">
+									<i class="fa fa-folder-open"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-6">
+						<label for="outputFolderPath-input">Pfad der Ausgangsdatei (GDT / 6310)</label>
+						<div class="input-group">
+							<input type="text" id="outputFolderPath-input" class="form-control" name="outputFolderPath" required [(ngModel)]="gdtServiceSettings.outputFolderPath" />
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button" (click)="browseForFolder('output')">
+									<i class="fa fa-folder-open"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row align-items-center">
+					<label for="nameTerm-input" class="col-10 col-form-label">
+						Geben sie bitte ein max. 4 stelligen Namen für die TerminalApp ein
+					</label>
+					<div class="col-2">
+						<input type="text" class="form-control" id="nameTerm-input" name="nameTerm" required pattern="[A-Za-z]{1,4}" [(ngModel)]="gdtServiceSettings.nameTerm" />
+					</div>
+				</div>
+
+				<div class="form-group row align-items-center">
+					<label for="nameApp-input" class="col-10 col-form-label">
+						Geben sie bitte ein max. 4 stelligen Namen für ihr Arztinformationssystem ein
+					</label>
+					<div class="col-2">
+						<input type="text" class="form-control" id="nameApp-input" name="nameApp" required pattern="[A-Za-z]{1,4}" [(ngModel)]="gdtServiceSettings.nameApp" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="nameApp-input" class="col-10 col-form-label">GDT Rückgabecode</label>
+					<div class="col-2">
+						<input type="text" class="form-control" id="gdtReturnCode-input" name="gdtReturnCode" required [(ngModel)]="gdtServiceSettings.gdtReturnCode" />
+					</div>
+				</div>
+
+			</ng-container>
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="dismiss()">Abbrechen</button>
+	<button type="button" class="btn btn-primary" [disabled]="form.form.pristine || form.form.invalid" (click)="submit()">
+		<i class="sq-checkmark"></i> Ok
+	</button>
+</div>

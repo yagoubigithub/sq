@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "sq-icons";
+    src: url("./sq-icons.eot?5bb39b9711fef4a7ea2ecd16b169627e#iefix") format("embedded-opentype"),
+url("./sq-icons.woff2?5bb39b9711fef4a7ea2ecd16b169627e") format("woff2"),
+url("./sq-icons.woff?5bb39b9711fef4a7ea2ecd16b169627e") format("woff");
+}
+
+i[class^="sq-"]:before, i[class*=" sq-"]:before {
+    font-family: sq-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.sq-activities:before {
+    content: "\f101";
+}
+.sq-admission:before {
+    content: "\f102";
+}
+.sq-calendar:before {
+    content: "\f103";
+}
+.sq-checkmark:before {
+    content: "\f104";
+}
+.sq-chevron-down:before {
+    content: "\f105";
+}
+.sq-chevron-left:before {
+    content: "\f106";
+}
+.sq-chevron-right:before {
+    content: "\f107";
+}
+.sq-chevron-up:before {
+    content: "\f108";
+}
+.sq-cross:before {
+    content: "\f109";
+}
+.sq-expand:before {
+    content: "\f10a";
+}
+.sq-export:before {
+    content: "\f10b";
+}
+.sq-import:before {
+    content: "\f10c";
+}
+.sq-minimize:before {
+    content: "\f10d";
+}
+.sq-pencil:before {
+    content: "\f10e";
+}
+.sq-plus:before {
+    content: "\f10f";
+}
+.sq-quit:before {
+    content: "\f110";
+}
+.sq-search:before {
+    content: "\f111";
+}
+.sq-send:before {
+    content: "\f112";
+}
+.sq-settings:before {
+    content: "\f113";
+}
+.sq-transfers:before {
+    content: "\f114";
+}
+.sq-trash:before {
+    content: "\f115";
+}

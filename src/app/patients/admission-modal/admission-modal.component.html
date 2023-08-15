@@ -1,0 +1,141 @@
+<div class="modal-header">
+	<h4 class="modal-title">Einweisung</h4>
+	<button type="button" class="close" aria-label="Close" (click)="dismiss()">
+		<span aria-hidden="true"><i class="sq-cross"></i></span>
+	</button>
+</div>
+<div class="modal-body">
+	<form #form="ngForm">
+		<fieldset [disabled]="isSubmitting">
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="profile-select" class="col-4 col-form-label">Profil *</label>
+						<div class="col-8">
+							<select class="custom-select" id="profile-select" name="profile" required [(ngModel)]="profile">
+								<option [ngValue]="null"></option>
+								<option *ngFor="let profile of profiles" [ngValue]="profile">{{ profile.name }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 justify-content-end">
+					<button type="button" class="btn btn-secondary btn-sm" (click)="importFile()">
+						<i class="sq-import"></i>
+						GDT<!-- / BDT --> importieren
+					</button>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="firstname-input" class="col-4 col-form-label">Vorname *</label>
+						<div class="col-8">
+							<input type="text" id="firstname-input" class="form-control" name="firstName" [(ngModel)]="patient.firstName" required />
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="lastname-input" class="col-4 col-form-label">Nachname *</label>
+						<div class="col-8">
+							<input type="text" id="lastname-input" class="form-control" name="lastName" [(ngModel)]="patient.lastName" required />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="dateofbirth-input" class="col-4 col-form-label">Geburtsdatum *</label>
+						<div class="col-8">
+							<div class="input-group">
+								<input id="dateofbirth-input" class="form-control" name="dateOfBirth"
+									placeholder="dd.mm.yyyy" ngbDatepicker #datePicker="ngbDatepicker"
+									[startDate]="{ year: 1960, month: 1 }"
+									[(ngModel)]="patient.dateOfBirth" required />
+									<!-- TODO: Add date validation -->
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button"
+										(click)="datePicker.toggle()">
+										<i class="sq-calendar"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="epid-input" class="col-4 col-form-label">EPID *</label>
+						<div class="col-8">
+							<input type="text" id="epid-input" class="form-control" name="epid" [(ngModel)]="patient.epid" required />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="gender-select" class="col-4 col-form-label">Geschlecht</label>
+						<div class="col-8">
+							<select class="custom-select" id="sex-select" name="sex" [(ngModel)]="patientData.sex">
+								<option value="0" selected></option>
+								<option value="1">männlich</option>
+								<option value="2">weiblich</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="street-input" class="col-2 col-form-label">Straße</label>
+				<div class="col-10">
+					<input type="text" id="street-input" class="form-control" name="street" [(ngModel)]="patientData.street" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="zip-input" class="col-4 col-form-label">PLZ</label>
+						<div class="col-8">
+							<input type="text" id="zip-input" class="form-control" name="zip" [(ngModel)]="patientData.zip" />
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group row">
+						<label for="city-input" class="col-4 col-form-label">Ort</label>
+						<div class="col-8">
+							<input type="text" id="city-input" class="form-control" name="city" [(ngModel)]="patientData.city" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-2">
+					<label class="col-form-label">Hauptdiagnose</label>
+				</div>
+				<div class="col-10">
+					<div class="mb-3" *ngFor="let diagnosis of diagnoses; let i = index">
+						<app-icd-input [ngModelOptions]="{ standalone: true }" [(ngModel)]="diagnoses[i]"
+							(ngModelChange)="ensurePresenceOfEmptyDiagnosisField(i)"
+							[canDelete]="diagnoses[i].icd" (onDelete)="diagnoses.splice(i, 1)">
+						</app-icd-input>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-secondary" (click)="dismiss()">Abbrechen</button>
+	<button type="button" class="btn btn-primary" [disabled]="form.form.invalid" (click)="submit()">
+		<i class="sq-checkmark"></i> Ok
+	</button>
+</div>

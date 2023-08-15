@@ -1,0 +1,39 @@
+$gray-200: #eeeeee;
+
+$primary: #f18924;
+$secondary: #828282;
+
+$yiq-contrasted-threshold: 175;
+
+$font-family-sans-serif:      "Be Vietnam", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-family-base:            $font-family-sans-serif;
+
+$table-border-width: 0;
+
+$border-radius: 12px;
+$border-radius-sm: 8px;
+
+$input-bg: white;
+$input-group-addon-bg: $input-bg;
+
+$form-group-margin-bottom: 4px;
+
+$pagination-bg: transparent;
+$pagination-disabled-bg: transparent;
+$pagination-border-width: 0;
+$pagination-padding-x: 8px;
+$pagination-padding-y: 4px;
+
+$pagination-hover-color: white;
+$pagination-hover-bg: $secondary;
+
+$modal-content-bg: $gray-200;
+$modal-content-border-width: 0;
+$modal-content-border-radius: 16px;
+
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
